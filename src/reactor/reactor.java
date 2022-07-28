@@ -6,7 +6,7 @@ public class reactor {
 	
 		System.out.println("Testing Git!");
 		System.out.println("Testing now working from 2 different machines! :D");
-		
+		System.out.println("Working from Ubuntu machine now.");
 	}
 	
 }
