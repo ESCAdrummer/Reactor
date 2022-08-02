@@ -2,6 +2,7 @@ package frames;
 
 import javax.swing.*;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.*;  
 
@@ -11,16 +12,19 @@ public class ReactorCalcFrame implements ActionListener{
     JLabel initialValues,kineticValues,KD,KI,Results,Conversion,fa,fb,fc,fd;
     JButton calc,help;
     
+    //Defining both frames.
     JFrame mainF= new JFrame();  
     JFrame helpF = new JFrame();
-	JFrame exceptionF = new JFrame();
     
-    ReactorCalcFrame(){  
-        header=new JLabel("Calculation of ideal Plug-Flow Reactor (PFR) solving a differential equation");
+public ReactorCalcFrame(){
+    	
+    	/*---------First set of labels and text fields, reaction information.--------------*/
+    	header=new JLabel("Calculation of ideal Plug-Flow Reactor (PFR) solving a differential equation");
         header.setBounds(0,0,720,30);
         header.setFont(new Font("Serif",Font.BOLD,20));
         header.setHorizontalAlignment(JLabel.CENTER);
         mainF.add(header);
+        mainF.setTitle("Calculation of Reactor");
 
         reactionData=new JLabel("Reaction Data:");
         reactionData.setBounds(0,40,200,30);
@@ -29,7 +33,7 @@ public class ReactorCalcFrame implements ActionListener{
         mainF.add(reactionData);
         
         a1=new JTextField();  
-        a1.setBounds(100,80,40,20);  
+        a1.setBounds(100,80,40,20);
         A=new JLabel("A");
         A.setBounds(150,80,20,20);
         A.setFont(new Font("Serif",Font.PLAIN,18));
@@ -40,7 +44,7 @@ public class ReactorCalcFrame implements ActionListener{
         mainF.add(plus1);
         
         b1=new JTextField();  
-        b1.setBounds(220,80,40,20);  
+        b1.setBounds(220,80,40,20); 
         B=new JLabel("B");
         B.setBounds(270,80,20,20);
         B.setFont(new Font("Serif",Font.PLAIN,18));
@@ -71,7 +75,7 @@ public class ReactorCalcFrame implements ActionListener{
         mainF.add(a1);mainF.add(b1);mainF.add(c1);mainF.add(d1);
         mainF.add(A);mainF.add(B);mainF.add(C);mainF.add(D);
 
-        /*---------------------------------------------------------------------------*/        
+        /*---------Second set of labels and text fields, initial values.--------------*/        
         
         initialValues=new JLabel("Initial Values:");
         initialValues.setBounds(0,120,200,30);
@@ -106,7 +110,7 @@ public class ReactorCalcFrame implements ActionListener{
         mainF.add(FAo);mainF.add(FBo);mainF.add(FCo);mainF.add(FDo);
         mainF.add(FAoLabel);mainF.add(FBoLabel);mainF.add(FCoLabel);mainF.add(FDoLabel);
         
-        /*---------------------------------------------------------------------------*/
+        /*---------Third set of labels and text fields, kinetic values.--------------*/        
         
         kineticValues=new JLabel("Kinetic Values:");
         kineticValues.setBounds(0,200,200,30);
@@ -128,7 +132,7 @@ public class ReactorCalcFrame implements ActionListener{
         
        mainF.add(kd);mainF.add(ki);mainF.add(KD);mainF.add(KI);
         
-        /*---------------------------------------------------------------------------*/        
+       /*---------Fourth set of labels and text fields, results section.--------------*/                
         
         Xresult=new JTextField();
         Xresult.setBounds(300,390,120,30);
@@ -137,13 +141,13 @@ public class ReactorCalcFrame implements ActionListener{
         Conversion.setBounds(300,360,120,20);
         Conversion.setFont(new Font("Serif",Font.PLAIN,18));
         Conversion.setHorizontalAlignment(JLabel.CENTER);
-       mainF.add(Xresult);mainF.add(Conversion);
+        mainF.add(Xresult);mainF.add(Conversion);
         
-        Results=new JLabel("Results values:");
+        Results=new JLabel("Results:");
         Results.setBounds(0,320,200,30);
         Results.setFont(new Font("Serif",Font.PLAIN,18));
         Results.setHorizontalAlignment(JLabel.CENTER);
-       mainF.add(Results);
+        mainF.add(Results);
         
         fa=new JLabel("FA");
         fa.setBounds(0,360,120,20);
@@ -181,28 +185,31 @@ public class ReactorCalcFrame implements ActionListener{
         FD.setEditable(false);
         FD.setHorizontalAlignment(JTextField.CENTER);
         
-       mainF.add(fa);mainF.add(fb);mainF.add(fc);mainF.add(fd);
-       mainF.add(FA);mainF.add(FB);mainF.add(FC);mainF.add(FD);
-        /*---------------------------------------------------------------------------*/
+        mainF.add(fa);mainF.add(fb);mainF.add(fc);mainF.add(fd);
+        mainF.add(FA);mainF.add(FB);mainF.add(FC);mainF.add(FD);
+
+        /*---------Calculate and Help button.--------------*/        
       
         calc=new JButton("Calculate");  
         calc.setBounds(300,288,120,30);  
 
         help=new JButton("Help");  
         help.setBounds(320,328,80,20);  
-       mainF.add(calc);mainF.add(help);
+        mainF.add(calc);mainF.add(help);
         
         calc.addActionListener(this);  
         help.addActionListener(this);  
 
-       mainF.setSize(720,480);
-       mainF.setResizable(false);
-       mainF.setLayout(null);
-       mainF.setLocationRelativeTo(null);
-       mainF.setVisible(true);
-        
+        mainF.setSize(720,480);
+        mainF.setResizable(false);
+        mainF.setLayout(null);
+        mainF.setLocationRelativeTo(null);
+        mainF.setVisible(true);
+
+        /*---------Help frame details.--------------*/
+
     } 
-    
+
     public void actionPerformed(ActionEvent e) {  
   
         if(e.getSource()==calc){  
@@ -218,19 +225,43 @@ public class ReactorCalcFrame implements ActionListener{
                 Xresult.setHorizontalAlignment(JTextField.CENTER);
         	}
         	catch (Exception exception) {
-        		exceptionF.setLocationRelativeTo(null);
-        		exceptionF.setSize(320,240);
-                exceptionF.setLayout(null);
-        		exceptionF.setVisible(true);
-        		
+        		//For any exception, the message dialog will appear.
+        		JOptionPane.showMessageDialog(null, "Calculation error. Please enter positive numbers in the text fields.", "Calculation error", JOptionPane.INFORMATION_MESSAGE);
         	}
         	
         }
         else if(e.getSource()==help){  
-        	helpF.setLocationRelativeTo(null);
-        	helpF.setSize(640,480);
-            helpF.setLayout(null);
-            helpF.setVisible(true);
+        	// When help button is pressed, showing dialog window.
+        	        	
+        	JDialog d = new JDialog(mainF , "Help", true);  
+            d.setLayout(null);  
+            JButton OK = new JButton ("Close");
+            OK.setBounds(150, 220, 80, 30);
+            
+            OK.addActionListener ( new ActionListener()  
+            {  
+                public void actionPerformed( ActionEvent e )  
+                {  
+                    d.setVisible(false);  
+                }  
+            });  
+            
+            JTextArea helpText = new JTextArea("Made by Alfredo Escalante.\n\n"
+            		+ "E-mail: escalantealf@gmail.com\n\n"
+            		+ "Calculates an ideal Plug-Flow Reactor (PFR) by integrating\n"
+            		+ "the mass balance equations for a 4 components reaction.\n\n"
+            		+ "Please enter only positive numbers and click Calculate\n"
+            		+ "to make the calculation.");
+            
+            helpText.setFont(new Font("Serif",Font.PLAIN,13));
+            helpText.setEditable(false);
+            helpText.setBounds(25, 25, 330, 180);
+            helpText.setVisible(true);
+
+            d.add(OK); d.add(helpText);   
+            d.setSize(400,300);
+            d.setLocationRelativeTo(null);
+            d.setVisible(true);  
         }  
         
     }  
