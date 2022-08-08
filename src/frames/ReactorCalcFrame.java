@@ -16,6 +16,11 @@ public class ReactorCalcFrame implements ActionListener {
 	JFrame mainF = new JFrame();
 	JFrame helpF = new JFrame();
 
+	public static void main(String[] args) {
+		// main method only opens the new frame.
+		new ReactorCalcFrame();
+	}
+
 	public ReactorCalcFrame() {
 
 		/*---------First set of labels and text fields, reaction information.--------------*/
@@ -146,9 +151,9 @@ public class ReactorCalcFrame implements ActionListener {
 		mainF.add(ki);
 		mainF.add(KD);
 		mainF.add(KI);
-		
+
 		/*---------Fourth set of labels and text fields, Reactor Volume.--------------*/
-		
+
 		reactorVolume = new JLabel("Reactor Volume (in Liters):");
 		reactorVolume.setBounds(0, 300, 300, 30);
 		reactorVolume.setFont(new Font("Serif", Font.PLAIN, 18));
@@ -158,8 +163,6 @@ public class ReactorCalcFrame implements ActionListener {
 		volume = new JTextField();
 		volume.setBounds(260, 300, 100, 30);
 		mainF.add(volume);
-		
-		
 
 		/*---------Fifth set of labels and text fields, results section.--------------*/
 
@@ -251,90 +254,91 @@ public class ReactorCalcFrame implements ActionListener {
 
 		if (e.getSource() == calc) {
 			try {
-				
+				// this is the code for the calculation when the Calculate button is pressed.
+
+				// capturing the information from the text fields
 				double FAO = Double.parseDouble(FAo.getText());
 				double FBO = Double.parseDouble(FBo.getText());
 				double FCO = Double.parseDouble(FCo.getText());
 				double FDO = Double.parseDouble(FDo.getText());
-				
-				//creating calculation object using constructor with initial values.
+
+				// creating calculation object of the PFR class using constructor with initial
+				// values.
 				PFR calculation = new PFR(FAO, FBO, FCO, FDO);
-				
-				
+
+				// setting the kinetic values for reaction speeds
 				double KDIRECT = Double.parseDouble(kd.getText());
 				double KINVERSE = Double.parseDouble(ki.getText());
-				
-				//setting the kinetic values for reaction speeds
 				calculation.setKinetics(KDIRECT, KINVERSE);
 
+				// setting the volume of the reactor
 				double VOLUME = Double.parseDouble(volume.getText());
-				//setting the volume
 				calculation.setVolume(VOLUME);
-				
-				
+
+				// setting the reaction coefficients
 				double coeffA = Double.parseDouble(a1.getText());
 				double coeffB = Double.parseDouble(b1.getText());
 				double coeffC = Double.parseDouble(c1.getText());
 				double coeffD = Double.parseDouble(d1.getText());
-				
-				//setting the reaction coefficients
 				calculation.setReactionCoefficients(coeffA, coeffB, coeffC, coeffD);
-				
+
+				// this is the calculation method that solves the ODE
 				double[] Flowrates = calculation.getOutputFlowrates();
-				
 				double FAout = Flowrates[0];
 				double FBout = Flowrates[1];
 				double FCout = Flowrates[2];
 				double FDout = Flowrates[3];
+				double Conversion = (FAO - FAout) / FAO;
 
-				double Conversion =  ( FAO - FAout) / FAO;
-
+				// formatting the output for the text fields
 				DecimalFormat numberFormatting = new DecimalFormat("###,###.00");
 				DecimalFormat convFormatting = new DecimalFormat("0.00000");
-				
+
 				String FAoutText = numberFormatting.format(FAout);
 				String FBoutText = numberFormatting.format(FBout);
 				String FCoutText = numberFormatting.format(FCout);
 				String FDoutText = numberFormatting.format(FDout);
 				String ConversionText = convFormatting.format(Conversion);
-				
-				
+
+				// setting values on the text fields
 				Xresult.setText(ConversionText);
 				Xresult.setHorizontalAlignment(JTextField.CENTER);
-				
+
 				FA.setText(FAoutText);
 				FA.setHorizontalAlignment(JTextField.CENTER);
-				
+
 				FB.setText(FBoutText);
 				FB.setHorizontalAlignment(JTextField.CENTER);
-				
+
 				FC.setText(FCoutText);
 				FC.setHorizontalAlignment(JTextField.CENTER);
-				
+
 				FD.setText(FDoutText);
 				FD.setHorizontalAlignment(JTextField.CENTER);
-				
 			} catch (Exception exception) {
-				// For any exception, the message dialog will appear.
+				// For any exception, the message dialog will appear. User must enter at least a
+				// 0 in the fields.
 				JOptionPane.showMessageDialog(null,
-						"Calculation error. Please enter positive numbers in the text fields. Enter 0 if not used.", "Calculation error",
-						JOptionPane.INFORMATION_MESSAGE);
+						"Calculation error. Please enter positive numbers in the text fields. Enter 0 if not used.",
+						"Calculation error", JOptionPane.INFORMATION_MESSAGE);
 			}
-
 		} else if (e.getSource() == help) {
-			// When help button is pressed, showing dialog window.
+			// This is the case when the help button is pressed, showing dialog window with
+			// usage information.
 
 			JDialog d = new JDialog(mainF, "Help", true);
 			d.setLayout(null);
 			JButton OK = new JButton("Close");
 			OK.setBounds(150, 220, 80, 30);
 
+			// Action listener when the button is pressed to close the window.
 			OK.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					d.setVisible(false);
 				}
 			});
 
+			// using a non-editable text area to allow selection.
 			JTextArea helpText = new JTextArea("Made by Alfredo Escalante.\n\n" + "E-mail: escalantealf@gmail.com\n\n"
 					+ "Calculates an ideal Plug-Flow Reactor (PFR) by integrating\n"
 					+ "the mass balance equations for a 4 components reaction.\n\n"
@@ -352,9 +356,5 @@ public class ReactorCalcFrame implements ActionListener {
 			d.setVisible(true);
 		}
 
-	}
-
-	public static void main(String[] args) {
-		new ReactorCalcFrame();
 	}
 }
