@@ -1,10 +1,8 @@
 # Calculation of an ideal Reactor
 
-I used to be a Chemical Reaction Engineering professor in a past life and always had the idea to build this with a GUI for academic purposes and to show the interactions between parameters. I started to learn Java and I see the potential for OOP for scientific and teaching purposes.
+I used to be a Chemical Reaction Engineering professor in a past life and I always had the idea to build this application with a GUI for academic and teaching purposes and to show the interactions between parameters. I started to learn Java and I saw the potential of OOP for scientific and teaching purposes.
 
-For the moment, only one basic reaction with 4 components is considered. However, you can play with the stoichiometric coefficients, initial flowrates and kinetic coefficients and learn the interactions between these parameters.
-
-For example, there is a single equilibrium reaction. To simulate in one direction or the other, the Kd or Ki can be entered 0. You can evaluate the effect of having more or less of one of the reactants. What would happen if you have both Kd and Ki equal? What is the predicted conversion?
+For the moment, only one basic reaction with 4 components is considered. This is the most basic reaction you can have in a system like this. However, you can play with the stoichiometric coefficients, initial flowrates and kinetic coefficients and learn the interactions between these parameters. For example, there is a single equilibrium reaction. To simulate in one direction or the other, the Kd or Ki can be entered 0. You can evaluate the effect of having more or less of one of the reactants. What would happen if you have both Kd and Ki equal? What is the predicted conversion?
 
 The next version will include a selector for a CSTR (Continuous-Stirred Tank Reactor) and the PFR (Plug-Flow Reactor), which are the two main ideal continuous reactors.
 
